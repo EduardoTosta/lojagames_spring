@@ -94,7 +94,7 @@ public class ProdutoController {
 		if (categoriaRepository.existsById(produto.getCategoria().getId())) 
 			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 		
-		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Tema não existe!", null);
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A categoria não existe!", null);
 	}
 	
 	
@@ -105,15 +105,13 @@ public class ProdutoController {
 		if (produto.getId() == null)
 			return ResponseEntity.badRequest().build();
  
-		if (produtoRepository.existsById(produto.getId())) {
-			
-			if (categoriaRepository.existsById(produto.getCategoria().getId()))
-				
-			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
-		
-		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Tema não existe!", null);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		if (!produtoRepository.existsById(produto.getId()))
+	    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+		if (!categoriaRepository.existsById(produto.getCategoria().getId()))
+		    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A categoria não existe!", null);
+
+		return ResponseEntity.ok(produtoRepository.save(produto));
 	}
 	
 	//Delete

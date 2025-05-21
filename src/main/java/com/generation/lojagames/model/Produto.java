@@ -29,15 +29,15 @@ public class Produto {
 	private Long id; 
 	
 	//Titulo
-	@Column(length = 1000)
+	@Column(length = 100)
 	@NotBlank(message = "O atributo 'titulo' é obrigatório")
-	@Size(min = 1, max = 1000, message = "O atributo 'título' deve ter entre 1 e 50 caracteres")
+	@Size(min = 1, max = 100, message = "O atributo 'título' deve ter entre 1 e 100 caracteres")
 	private String titulo;
 	
 	//Plataforma
 	@Column(length = 1000)
 	@NotBlank(message = "O atributo 'plataforma' é obrigatório")
-	@Size(min = 1, max = 1000, message = "O atributo 'plataforma' deve ter entre 1 e 20 caracteres")
+	@Size(min = 1, max = 50, message = "O atributo 'plataforma' deve ter entre 1 e 50 caracteres")
 	private String plataforma;
 	
 	//Imagem (Link)

@@ -34,10 +34,11 @@ public class CategoriaController {
 	private CategoriaRepository categoriaRepository;
 	
 	//Listar todos
+	@GetMapping
 	public ResponseEntity<?> getAll(){
-		List<Categoria> produtos = categoriaRepository.findAll();
+		List<Categoria> categorias = categoriaRepository.findAll();
 			
-		if (produtos.isEmpty()) {
+		if (categorias.isEmpty()) {
 		    Map<String, String> response = new HashMap<>();
 		    response.put("mensagem", "Nenhum produto encontrado.");
 		    return ResponseEntity.status(200).body(response);
@@ -56,7 +57,7 @@ public class CategoriaController {
 	
 	//Busca por titulo
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<List<Categoria>> getAllByDescricao(@PathVariable String titulo) {
+	public ResponseEntity<List<Categoria>> getAllByTitulo(@PathVariable String titulo) {
 		
 		return ResponseEntity.ok(categoriaRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}

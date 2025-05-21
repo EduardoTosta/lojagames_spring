@@ -28,9 +28,9 @@ public class Categoria {
 	
 	//Titulo
 	@Column(length = 1000)
-	@NotBlank(message = "O atributo 'descrição' é obrigatório")
-	@Pattern(regexp = "^[^0-9].*", message = "A descrição não pode ser apenas numérico")
-	@Size(min = 10, max = 1000, message = "O atributo 'descrição' deve ter entre 10 e 1000 caracteres")
+	@NotBlank(message = "O atributo 'Titulo' é obrigatório")
+	@Pattern(regexp = "^[^0-9].*", message = "O Titulo não pode ser apenas numérico")
+	@Size(min = 10, max = 1000, message = "O atributo 'Titulo' deve ter entre 10 e 1000 caracteres")
 	private String titulo;
 	
 	//Produto
