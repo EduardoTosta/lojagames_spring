@@ -2,11 +2,14 @@ package com.generation.lojagames.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -23,31 +26,39 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO_INCREMENT
 	private Long id; 
 	
+	//Titulo
 	@Column(length = 1000)
 	@NotBlank(message = "O atributo 'titulo' é obrigatório")
 	@Size(min = 1, max = 1000, message = "O atributo 'título' deve ter entre 1 e 50 caracteres")
 	private String titulo;
 	
+	//Plataforma
 	@Column(length = 1000)
 	@NotBlank(message = "O atributo 'plataforma' é obrigatório")
 	@Size(min = 1, max = 1000, message = "O atributo 'plataforma' deve ter entre 1 e 20 caracteres")
 	private String plataforma;
 	
+	//Imagem (Link)
 	@Column(length = 1000)
 	@NotBlank(message = "O atributo 'imagem' é obrigatório")
 	@Size(min = 1, max = 1000, message = "O atributo 'imagem' deve ter entre 1 e 20 caracteres")
 	private String imagem;
 	
+	//Estoque
 	@NotNull(message = "O estoque é obrigatório!")
     @Size(min = 10, max = 1000, message = "O atributo descrição dever ter no minimo 10 e no maximo 1000 caracteres.")
     private Integer estoque;
 	
+	//Preço
 	@NotNull(message = "O atributo 'preço' é obrigatório")
 	@Positive(message = "O atributo 'preço' deve ser um número positivo")
 	@Digits(integer = 6, fraction = 2, message = "O preço deve ter até 6 dígitos inteiros e 2 casas decimais")
 	private BigDecimal preco;
 	
-	
+	//Categoria
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Categoria categoria;
 	
 	//Getters e Setters
 	public Long getId() {
@@ -88,6 +99,22 @@ public class Produto {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 	
 	
