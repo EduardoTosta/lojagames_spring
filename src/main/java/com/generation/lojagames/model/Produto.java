@@ -2,6 +2,8 @@ package com.generation.lojagames.model;
 
 import java.math.BigDecimal;
 
+import org.hibernate.validator.constraints.URL;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -41,12 +43,12 @@ public class Produto {
 	//Imagem (Link)
 	@Column(length = 1000)
 	@NotBlank(message = "O atributo 'imagem' é obrigatório")
-	@Size(min = 1, max = 1000, message = "O atributo 'imagem' deve ter entre 1 e 20 caracteres")
+	@Size(min = 1, max = 1000, message = "O atributo 'imagem' deve ter entre 1 e 1000 caracteres")
+	@URL(message = "O atributo 'imagem' deve conter uma URL válida")
 	private String imagem;
 	
 	//Estoque
 	@NotNull(message = "O estoque é obrigatório!")
-    @Size(min = 10, max = 1000, message = "O atributo descrição dever ter no minimo 10 e no maximo 1000 caracteres.")
     private Integer estoque;
 	
 	//Preço

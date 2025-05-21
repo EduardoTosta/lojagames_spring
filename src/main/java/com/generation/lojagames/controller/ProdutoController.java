@@ -1,5 +1,6 @@
 package com.generation.lojagames.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.lojagames.model.Produto;
+import com.generation.lojagames.repository.CategoriaRepository;
 import com.generation.lojagames.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
@@ -33,6 +35,8 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	//Mostrar todos os produtos
 	@GetMapping
@@ -63,21 +67,36 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
+	//Filtrar por plataforma
+	@GetMapping("/plataforma/{plataforma}")
+	public ResponseEntity<List<Produto>> getByPlataforma(@PathVariable String plataforma) {
+	    return ResponseEntity.ok(produtoRepository.findAllByPlataformaContainingIgnoreCase(plataforma));
+	}
+	
+	//Maior Preço
+	@GetMapping("/preco/maiorque/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoMaiorQue(@PathVariable BigDecimal preco) {
+	    return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThan(preco));
+	}
+
+	
+	//Menor Preço
+	@GetMapping("/preco/menorque/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoMenorQue(@PathVariable BigDecimal preco) {
+	    return ResponseEntity.ok(produtoRepository.findByPrecoLessThan(preco));
+	}
+
 	
 	//Create
-	/*
 	@PostMapping
 	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto) {
 		
-		if (temaRepository.existsById(postagem.getTema().getId())) {
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
-		
-		}
+		if (categoriaRepository.existsById(produto.getCategoria().getId())) 
+			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 		
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Tema não existe!", null);
 	}
-	*/
+	
 	
 	//Update
 	@PutMapping
@@ -86,14 +105,14 @@ public class ProdutoController {
 		if (produto.getId() == null)
 			return ResponseEntity.badRequest().build();
  
-		/*if (produtoRepository.existsById(produto.getId())) {
+		if (produtoRepository.existsById(produto.getId())) {
 			
-			if (temaRepository.existsById(produto.getTema().getId()))
+			if (categoriaRepository.existsById(produto.getCategoria().getId()))
 				
 			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
 		
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Tema não existe!", null);
-		}*/
+		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
