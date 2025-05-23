@@ -40,7 +40,7 @@ public class CategoriaController {
 			
 		if (categorias.isEmpty()) {
 		    Map<String, String> response = new HashMap<>();
-		    response.put("mensagem", "Nenhum produto encontrado.");
+		    response.put("mensagem", "Nenhuma categoria encontrada.");
 		    return ResponseEntity.status(200).body(response);
 		}
 		//SELECT * FROM tb_postagens;
@@ -58,7 +58,7 @@ public class CategoriaController {
 	//Busca por titulo
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Categoria>> getAllByTitulo(@PathVariable String titulo) {
-		
+	
 		return ResponseEntity.ok(categoriaRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
